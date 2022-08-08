@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ImageGalleryItem } from 'components/ImageGalleryItem';
 import { GalleryContainer } from './ImageGallery.styled';
@@ -38,9 +39,10 @@ export class ImageGallery extends Component {
       <React.Fragment>
         {pictures && (
           <GalleryContainer>
-            {pictures.hits.map(({ id, webformatURL, largeImageURL }) => (
+            {pictures.hits.map(({ id, tags, webformatURL, largeImageURL }) => (
               <ImageGalleryItem
                 key={id}
+                tags={tags}
                 webformatURL={webformatURL}
                 largeImageURL={largeImageURL}
               />
@@ -51,3 +53,7 @@ export class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+};
