@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ImageGalleryItem } from 'components/ImageGalleryItem';
+import { LoadButton } from 'components/Button';
+import PicturesApiService from '../../services/pictures-api';
 import { GalleryContainer } from './ImageGallery.styled';
 
-const API_KEY = '29121921-8e5b9c13e3f0ecc46ac9f6034';
-const BASE_URL = 'https://pixabay.com/api';
+const picturesApiService = new PicturesApiService();
 
 export class ImageGallery extends Component {
   state = {
@@ -14,32 +15,31 @@ export class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchQuery !== this.props.searchQuery) {
-      fetch(
-        `${BASE_URL}/?key=${API_KEY}&q=${this.props.searchQuery}&page=1&per_page=4&image_type=photo&orientation=horizontal&safesearch=true`,
-      )
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-        })
-        .then(pictures => this.setState({ pictures }));
+      picturesApiService.query = this.props.searchQuery;
+      picturesApiService.resetPage();
+      picturesApiService
+        .fetchPictures()
+        .then(pictures => this.setState({ pictures: pictures.hits }));
     }
   }
 
+  onLoadMore = () => {
+    picturesApiService.incrementPage();
+    picturesApiService.fetchPictures().then(pictures =>
+      this.setState(prevState => ({
+        pictures: [...prevState.pictures, ...pictures.hits],
+      })),
+    );
+  };
+
   render() {
     const { pictures } = this.state;
-    // const { searchQuery } = this.props;
-
-    // console.log(pictures);
-    // if (pictures !== null) {
-    //   return pictures.hits.map(picture => console.log(picture));
-    // }
 
     return (
       <React.Fragment>
         {pictures && (
           <GalleryContainer>
-            {pictures.hits.map(({ id, tags, webformatURL, largeImageURL }) => (
+            {pictures.map(({ id, tags, webformatURL, largeImageURL }) => (
               <ImageGalleryItem
                 key={id}
                 tags={tags}
@@ -49,6 +49,7 @@ export class ImageGallery extends Component {
             ))}
           </GalleryContainer>
         )}
+        {pictures && <LoadButton onClick={this.onLoadMore} />}
       </React.Fragment>
     );
   }
