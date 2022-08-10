@@ -24,5 +24,5 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  searchQuery: PropTypes.string.isRequired,
+  searchQuery: PropTypes.string,
 };

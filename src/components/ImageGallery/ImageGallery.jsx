@@ -94,7 +94,12 @@ export class ImageGallery extends Component {
 
         {pictures && !loading && <LoadButton onClick={this.onLoadMore} />}
 
-        {error && <h1>{error.message}</h1>}
+        {error && (
+          <React.Fragment>
+            <h1>Something went wrong!</h1>
+            <p>{error.message}</p>
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }
