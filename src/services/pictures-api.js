@@ -9,7 +9,7 @@ export default class PicturesApiService {
 
   fetchPictures() {
     return fetch(
-      `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&page=${this.page}&per_page=4&image_type=photo&orientation=horizontal&safesearch=true`,
+      `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&page=${this.page}&per_page=12&image_type=photo&orientation=horizontal&safesearch=true`,
     ).then(res => {
       if (res.ok) {
         return res.json();

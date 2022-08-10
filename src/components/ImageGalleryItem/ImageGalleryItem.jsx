@@ -2,12 +2,21 @@
 import PropTypes from 'prop-types';
 import { GalleryItem, Img } from './ImageGalleryItem.styled';
 
-export function ImageGalleryItem({ tags, webformatURL, largeImageURL }) {
+export function ImageGalleryItem({
+  tags,
+  webformatURL,
+  largeImageURL,
+  onImageClick,
+}) {
   // console.log(webformatURL);
   // console.log(largeImageURL);
   return (
     <GalleryItem>
-      <Img src={webformatURL} alt={tags} />
+      <Img
+        src={webformatURL}
+        alt={tags}
+        onClick={() => onImageClick(largeImageURL, tags)}
+      />
     </GalleryItem>
   );
 }

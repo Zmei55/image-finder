@@ -17,7 +17,9 @@ export class ImageGallery extends Component {
     pictures: null,
     loading: false,
     error: null,
-    showModal: true,
+    showModal: false,
+    largeImageURL: null,
+    tags: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -53,8 +55,16 @@ export class ImageGallery extends Component {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
+  handleLargeImg = (largeImageURL, tags) => {
+    this.setState({
+      largeImageURL,
+      tags,
+    });
+    this.toggleModal();
+  };
+
   render() {
-    const { pictures, loading, showModal } = this.state;
+    const { pictures, loading, showModal, largeImageURL, tags } = this.state;
 
     return (
       <React.Fragment>
@@ -66,16 +76,20 @@ export class ImageGallery extends Component {
                 tags={tags}
                 webformatURL={webformatURL}
                 largeImageURL={largeImageURL}
+                onImageClick={this.handleLargeImg}
               />
             ))}
           </GalleryContainer>
         )}
+
         {showModal && (
           <Modal onClose={this.toggleModal}>
-            <img src="" alt="" />
+            <img src={largeImageURL} alt={tags} />
           </Modal>
         )}
+
         {loading && <Loader />}
+
         {pictures && !loading && <LoadButton onClick={this.onLoadMore} />}
       </React.Fragment>
     );
