@@ -1,12 +1,5 @@
 import { Component } from 'react';
-// import PropTypes from 'prop-types';
-import {
-  SearchHeader,
-  SearchForm,
-  Button,
-  // ButtonLabel,
-  Input,
-} from './Searchbar.styled';
+import { SearchHeader, SearchForm, Button, Input } from './Searchbar.styled';
 import { ImSearch } from 'react-icons/im';
 
 export class Searchbar extends Component {
@@ -35,7 +28,6 @@ export class Searchbar extends Component {
         <SearchForm onSubmit={this.handleSubmit}>
           <Button type="submit">
             <ImSearch size={24} />
-            {/* <ButtonLabel>Search</ButtonLabel> */}
           </Button>
 
           <Input

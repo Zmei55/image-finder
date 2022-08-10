@@ -14,6 +14,8 @@ export default class PicturesApiService {
       if (res.ok) {
         return res.json();
       }
+
+      return Promise.reject(new Error('Something went wrong!'));
     });
   }
 

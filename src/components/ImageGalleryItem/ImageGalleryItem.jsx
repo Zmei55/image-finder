@@ -8,8 +8,6 @@ export function ImageGalleryItem({
   largeImageURL,
   onImageClick,
 }) {
-  // console.log(webformatURL);
-  // console.log(largeImageURL);
   return (
     <GalleryItem>
       <Img
@@ -25,4 +23,5 @@ ImageGalleryItem.propTypes = {
   tags: PropTypes.string.isRequired,
   webformatURL: PropTypes.string.isRequired,
   largeImageURL: PropTypes.string.isRequired,
+  onImageClick: PropTypes.func.isRequired,
 };

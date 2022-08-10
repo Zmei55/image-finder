@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Container } from './App.styled';
 import { Searchbar } from 'components/Searchbar';
 import { ImageGallery } from 'components/ImageGallery';
@@ -21,3 +22,7 @@ export class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+};
