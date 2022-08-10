@@ -6,8 +6,6 @@ import { LoadButton } from 'components/Button';
 import PicturesApiService from '../../services/pictures-api';
 import { Loader } from 'components/Loader';
 import { Modal } from 'components/Modal';
-// import { ThreeDots } from 'react-loader-spinner';
-// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { GalleryContainer } from './ImageGallery.styled';
 
 const picturesApiService = new PicturesApiService();
@@ -23,10 +21,13 @@ export class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.searchQuery !== this.props.searchQuery) {
+    const prevSearchQuery = prevProps.searchQuery;
+    const nextSearchQuery = this.props.searchQuery;
+
+    if (prevSearchQuery !== nextSearchQuery) {
       this.setState({ loading: true });
 
-      picturesApiService.query = this.props.searchQuery;
+      picturesApiService.query = nextSearchQuery;
       picturesApiService.resetPage();
       picturesApiService
         .fetchPictures()
@@ -64,7 +65,8 @@ export class ImageGallery extends Component {
   };
 
   render() {
-    const { pictures, loading, showModal, largeImageURL, tags } = this.state;
+    const { pictures, loading, error, showModal, largeImageURL, tags } =
+      this.state;
 
     return (
       <React.Fragment>
@@ -91,6 +93,8 @@ export class ImageGallery extends Component {
         {loading && <Loader />}
 
         {pictures && !loading && <LoadButton onClick={this.onLoadMore} />}
+
+        {error && <h1>{error.message}</h1>}
       </React.Fragment>
     );
   }
